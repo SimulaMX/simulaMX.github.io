@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SimulaMX — Calculadora Sueldo Neto México 2026</title>
+  <meta name="description" content="Calcula tu sueldo neto en segundos. ISR, IMSS, vales de despensa y fondo de ahorro incluidos. Tablas 2026 oficiales SAT. Gratis y sin registro." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:        #f5f7f2;
+      --surface:   #ffffff;
+      --surface2:  #eef2e8;
+      --border:    #d6dece;
+      --accent:    #1a7a4a;
+      --accent-lt: #e8f5ee;
+      --accent2:   #d4870a;
+      --neg:       #c0392b;
+      --neg-lt:    #fdf0ee;
+      --text:      #1a2217;
+      --text-mid:  #4a5e45;
+      --text-muted:#8a9e84;
+      --shadow:    0 2px 16px rgba(26,74,26,0.08);
+      --radius:    16px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      padding-bottom: 60px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-family: 'Fraunces', serif;
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--accent);
+      letter-spacing: -0.5px;
+    }
+
+    .logo span {
+      color: var(--text-muted);
+      font-weight: 400;
+      font-size: 13px;
+      margin-left: 6px;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .nav-badge {
+      font-size: 11px;
+      font-weight: 500;
+      background: var(--accent-lt);
+      color: var(--accent);
+      border: 1px solid rgba(26,122,74,0.2);
+      padding: 4px 12px;
+      border-radius: 100px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: 48px 24px 36px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-lt);
+      border: 1px solid rgba(26,122,74,0.2);
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(28px, 6vw, 46px);
+      font-weight: 900;
+      line-height: 1.08;
+      color: var(--text);
+      margin-bottom: 14px;
+      letter-spacing: -1px;
+    }
+
+    h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 15px;
+      color: var(--text-mid);
+      font-weight: 300;
+      line-height: 1.6;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    /* ── MAIN LAYOUT ── */
+    .main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    @media (max-width: 680px) {
+      .main { grid-template-columns: 1fr; }
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .card-title {
+      font-family: 'Fraunces', serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 22px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-title .icon {
+      width: 28px;
+      height: 28px;
+      background: var(--accent-lt);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    /* ── INPUTS ── */
+    .field {
+      margin-bottom: 20px;
+    }
+
+    .field label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-mid);
+      margin-bottom: 7px;
+    }
+
+    .field label .tooltip {
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--text-muted);
+      background: var(--surface2);
+      border-radius: 100px;
+      padding: 2px 8px;
+      cursor: help;
+      position: relative;
+    }
+
+    .field label .tooltip:hover::after {
+      content: attr(data-tip);
+      position: absolute;
+      right: 0;
+      top: 120%;
+      background: var(--text);
+      color: #fff;
+      font-size: 11px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      width: 220px;
+      z-index: 99;
+      line-height: 1.5;
+      font-weight: 400;
+    }
+
+    .input-wrap {
+      display: flex;
+      align-items: center;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .input-wrap:focus-within {
+      border-color: var(--accent);
+    }
+
+    .input-prefix {
+      padding: 0 12px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: var(--surface2);
+      border-right: 1px solid var(--border);
+      height: 44px;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-wrap input[type="number"] {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      padding: 0 14px;
+      height: 44px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      -moz-appearance: textfield;
+    }
+
+    .input-wrap input[type="number"]::-webkit-outer-spin-button,
+    .input-wrap input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+
+    .select-wrap {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .select-wrap:focus-within { border-color: var(--accent); }
+
+    .select-wrap select {
+      width: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      padding: 0 14px;
+      height: 44px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a9e84' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+    }
+
+    .toggle-field {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--surface2);
+      cursor: pointer;
+    }
+
+    .toggle-field:last-child { border-bottom: none; }
+
+    .toggle-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-mid);
+    }
+
+    .toggle-label small {
+      display: block;
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .toggle {
+      width: 40px;
+      height: 22px;
+      background: var(--border);
+      border-radius: 100px;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+
+    .toggle.on { background: var(--accent); }
+
+    .toggle::after {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background: #fff;
+      border-radius: 50%;
+      top: 3px;
+      left: 3px;
+      transition: left 0.2s;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    }
+
+    .toggle.on::after { left: 21px; }
+
+    .optional-input {
+      margin-top: 10px;
+      display: none;
+    }
+
+    .optional-input.visible { display: block; }
+
+    /* ── RESULTADOS ── */
+    .result-hero {
+      background: linear-gradient(135deg, var(--accent) 0%, #0f5a33 100%);
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 18px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .result-hero::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 120px; height: 120px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 50%;
+    }
+
+    .result-hero-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 6px;
+    }
+
+    .result-hero-amount {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(30px, 6vw, 42px);
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -1px;
+      line-height: 1;
+    }
+
+    .result-hero-sub {
+      font-size: 12px;
+      color: rgba(255,255,255,0.55);
+      margin-top: 6px;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .result-item {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+    }
+
+    .result-item-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .result-item-val {
+      font-family: 'Fraunces', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* Desglose */
+    .breakdown-title {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 12px;
+    }
+
+    .breakdown-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--surface2);
+      font-size: 13px;
+    }
+
+    .breakdown-row:last-child { border-bottom: none; }
+
+    .breakdown-name {
+      color: var(--text-mid);
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .breakdown-name .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .dot-pos { background: var(--accent); }
+    .dot-neg { background: var(--neg); }
+    .dot-neu { background: var(--accent2); }
+
+    .breakdown-amount {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .amount-pos { color: var(--accent); }
+    .amount-neg { color: var(--neg); }
+    .amount-neu { color: var(--accent2); }
+
+    /* barra visual */
+    .bar-wrap {
+      margin-bottom: 20px;
+    }
+
+    .bar-label-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .bar-track {
+      height: 8px;
+      background: var(--surface2);
+      border-radius: 100px;
+      overflow: hidden;
+      display: flex;
+    }
+
+    .bar-seg {
+      height: 100%;
+      transition: width 0.5s ease;
+    }
+
+    .bar-neto { background: var(--accent); }
+    .bar-isr  { background: #e74c3c; }
+    .bar-imss { background: #e67e22; }
+    .bar-fa   { background: #8e44ad; }
+
+    /* barra leyenda */
+    .bar-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      color: var(--text-mid);
+    }
+
+    .legend-dot {
+      width: 8px; height: 8px;
+      border-radius: 2px;
+    }
+
+    /* anual */
+    .anual-box {
+      background: linear-gradient(135deg, #fffbf0, #fff8e1);
+      border: 1px solid rgba(212,135,10,0.25);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .anual-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--accent2);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 4px;
+    }
+
+    .anual-val {
+      font-family: 'Fraunces', serif;
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--text);
+    }
+
+    .anual-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    /* empty state */
+    .empty {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-muted);
+    }
+
+    .empty-icon {
+      font-size: 36px;
+      margin-bottom: 12px;
+      opacity: 0.4;
+    }
+
+    .empty p {
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* disclaimer */
+    .disclaimer {
+      max-width: 900px;
+      margin: 28px auto 0;
+      padding: 0 20px;
+      font-size: 11px;
+      color: var(--text-muted);
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    /* animación entrada */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-in { animation: fadeUp 0.35s ease both; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">SimulaMX <span>Beta</span></div>
+  <span class="nav-badge">Simuladores Financieros México</span>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Gratis · Sin registro · 2026</div>
+  <h1>¿Cuánto recibes<br><em>realmente</em> en nómina?</h1>
+  <p class="hero-sub">Calcula tu sueldo neto en segundos. ISR, IMSS, vales y fondo de ahorro incluidos.</p>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- COLUMNA INPUTS -->
+  <div class="card">
+    <div class="card-title">
+      <div class="icon">📝</div>
+      Tus datos de nómina
+    </div>
+
+    <!-- Sueldo bruto -->
+    <div class="field">
+      <label>
+        Sueldo bruto mensual
+        <span class="tooltip" data-tip="Monto antes de cualquier descuento. Aparece en tu contrato o recibo como 'sueldo base'.">¿Qué es esto?</span>
+      </label>
+      <div class="input-wrap">
+        <span class="input-prefix">$</span>
+        <input type="number" id="bruto" placeholder="25,000" min="0" oninput="calcular()" />
+      </div>
+    </div>
+
+    <!-- Frecuencia -->
+    <div class="field">
+      <label>Frecuencia de pago</label>
+      <div class="select-wrap">
+        <select id="frecuencia" onchange="calcular()">
+          <option value="mensual">Mensual</option>
+          <option value="quincenal" selected>Quincenal</option>
+          <option value="semanal">Semanal</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Separador campos opcionales -->
+    <div style="border-top:1px solid var(--surface2); margin: 4px 0 16px; padding-top:16px;">
+      <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px;font-weight:500;text-transform:uppercase;letter-spacing:1px;">Prestaciones adicionales (opcional)</p>
+
+      <!-- Vales de despensa -->
+      <div class="toggle-field" onclick="toggleOpt('vales')">
+        <div class="toggle-label">
+          Vales de despensa
+          <small>Exento de ISR hasta el tope legal</small>
+        </div>
+        <div class="toggle" id="toggle-vales"></div>
+      </div>
+      <div class="optional-input" id="input-vales">
+        <div class="field" style="margin-top:10px;margin-bottom:0">
+          <div class="input-wrap">
+            <span class="input-prefix">$</span>
+            <input type="number" id="vales" placeholder="1,000" min="0" oninput="calcular()" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Fondo de ahorro -->
+      <div class="toggle-field" onclick="toggleOpt('fondo')">
+        <div class="toggle-label">
+          Fondo de ahorro
+          <small>Tu empresa retiene y duplica al año</small>
+        </div>
+        <div class="toggle" id="toggle-fondo"></div>
+      </div>
+      <div class="optional-input" id="input-fondo">
+        <div class="field" style="margin-top:10px;margin-bottom:0">
+          <label style="font-size:12px;color:var(--text-muted);">Porcentaje de retención</label>
+          <div class="select-wrap">
+            <select id="fondo_pct" onchange="calcular()">
+              <option value="0.04">4%</option>
+              <option value="0.05">5%</option>
+              <option value="0.08">8%</option>
+              <option value="0.10">10%</option>
+              <option value="0.13" selected>13% (máximo exento)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bonos / Comisiones -->
+      <div class="toggle-field" onclick="toggleOpt('bono')">
+        <div class="toggle-label">
+          Bono / Comisión mensual
+          <small>Se agrega a tu base gravable de ISR</small>
+        </div>
+        <div class="toggle" id="toggle-bono"></div>
+      </div>
+      <div class="optional-input" id="input-bono">
+        <div class="field" style="margin-top:10px;margin-bottom:0">
+          <div class="input-wrap">
+            <span class="input-prefix">$</span>
+            <input type="number" id="bono" placeholder="5,000" min="0" oninput="calcular()" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- COLUMNA RESULTADOS -->
+  <div id="resultados">
+    <div class="card empty animate-in">
+      <div class="empty-icon">💡</div>
+      <p>Ingresa tu sueldo bruto mensual para ver tu desglose completo de nómina.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- DISCLAIMER -->
+<p class="disclaimer">
+  Los resultados son estimaciones orientativas basadas en las tablas ISR 2026 (Anexo 8 RMF 2026, DOF 28-dic-2025), UMA 2026 ($117.31 diarios) y cuotas IMSS vigentes.<br>
+  No constituyen asesoría fiscal. Para situaciones específicas, consulta a un contador certificado.
+</p>
+
+<script>
+// ─────────────────────────────────────────────
+// TABLAS ISR MENSUAL 2026 — Art. 96 LISR
+// Fuente: Anexo 8 RMF 2026, DOF 28-dic-2025
+// ─────────────────────────────────────────────
+const tablaISR = [
+  { limInf:      0.01, limSup:    844.59, cuotaFija:     0.00, tasa: 0.0192 },
+  { limInf:    844.60, limSup:   7168.51, cuotaFija:    16.22, tasa: 0.0640 },
+  { limInf:   7168.52, limSup:  12598.02, cuotaFija:   420.95, tasa: 0.1088 },
+  { limInf:  12598.03, limSup:  14644.64, cuotaFija:  1011.68, tasa: 0.1600 },
+  { limInf:  14644.65, limSup:  17533.64, cuotaFija:  1339.14, tasa: 0.1792 },
+  { limInf:  17533.65, limSup:  35362.83, cuotaFija:  1856.84, tasa: 0.2136 },
+  { limInf:  35362.84, limSup:  55736.68, cuotaFija:  5665.16, tasa: 0.2352 },
+  { limInf:  55736.69, limSup: 106410.50, cuotaFija: 10457.09, tasa: 0.3000 },
+  { limInf: 106410.51, limSup: 141880.66, cuotaFija: 25659.23, tasa: 0.3200 },
+  { limInf: 141880.67, limSup: 425641.99, cuotaFija: 36018.97, tasa: 0.3400 },
+  { limInf: 425642.00, limSup: Infinity,  cuotaFija:132573.79, tasa: 0.3500 },
+];
+
+// Subsidio al empleo mensual 2026
+// Fuente: DOF 01/05/2024 — monto fijo hasta $9,081 de ingreso gravable
+const tablaSubsidio = [
+  { limInf:    0.01, limSup: 9081.00, subsidio: 406.83 },
+  { limInf: 9081.01, limSup: Infinity, subsidio:   0.00 },
+];
+
+// Cuota obrera IMSS (% sobre SBC)
+const IMSS_CUOTA    = 0.0165; // 1.65% enfermedades y maternidad + prestaciones en dinero
+const IMSS_CESANTIA = 0.0125; // 1.25% cesantía y vejez (AFORE)
+// UMA 2026 — INEGI, DOF 09/01/2026, vigente desde 01/02/2026
+const UMA_DIARIA_2026 = 117.31;
+const UMA_MENSUAL     = UMA_DIARIA_2026 * 30.4;   // $3,566.22
+// Salario mínimo 2026 — CONASAMI, DOF 09/12/2025
+const SM_DIARIO_2026  = 315.04;
+
+// ─────────────────────────────────────────────
+// TOGGLES
+// ─────────────────────────────────────────────
+const toggled = { vales: false, fondo: false, bono: false };
+
+function toggleOpt(key) {
+  toggled[key] = !toggled[key];
+  document.getElementById('toggle-' + key).classList.toggle('on', toggled[key]);
+  document.getElementById('input-' + key).classList.toggle('visible', toggled[key]);
+  calcular();
+}
+
+// ─────────────────────────────────────────────
+// CÁLCULO PRINCIPAL
+// ─────────────────────────────────────────────
+function calcularISR(baseGravable) {
+  const nivel = tablaISR.find(n => baseGravable >= n.limInf && baseGravable <= n.limSup);
+  if (!nivel) return 0;
+  const isr = nivel.cuotaFija + (baseGravable - nivel.limInf) * nivel.tasa;
+  // Subsidio al empleo
+  const subNivel = tablaSubsidio.find(n => baseGravable >= n.limInf && baseGravable <= n.limSup);
+  const subsidio = subNivel ? subNivel.subsidio : 0;
+  return Math.max(0, isr - subsidio);
+}
+
+function fmt(n) {
+  return '$' + n.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function calcular() {
+  const bruto = parseFloat(document.getElementById('bruto').value) || 0;
+  if (bruto <= 0) {
+    document.getElementById('resultados').innerHTML = `
+      <div class="card empty animate-in">
+        <div class="empty-icon">💡</div>
+        <p>Ingresa tu sueldo bruto mensual para ver tu desglose completo de nómina.</p>
+      </div>`;
+    return;
+  }
+
+  const frecuencia = document.getElementById('frecuencia').value;
+  const vales      = toggled.vales ? (parseFloat(document.getElementById('vales').value) || 0) : 0;
+  const fondoPct   = toggled.fondo ? parseFloat(document.getElementById('fondo_pct').value) : 0;
+  const bono       = toggled.bono  ? (parseFloat(document.getElementById('bono').value)  || 0) : 0;
+
+  // Exención vales: 40% de UMA mensual (Art. 93 LISR)
+  const valesExencionLimite = UMA_MENSUAL * 0.40;
+  const valesGravado = Math.max(0, vales - valesExencionLimite);
+
+  // Fondo de ahorro — tope real es 1.3 × UMA mensual (Art. 93 fracc. XI LISR)
+  const fondoTopeUMA   = UMA_MENSUAL * 1.3;                        // $4,635.09
+  const fondoCalc      = bruto * fondoPct;                         // lo que daría el % elegido
+  const fondoRetencion = Math.min(fondoCalc, fondoTopeUMA);        // nunca supera el tope
+  const fondoExento    = fondoRetencion;                           // 100% exento al estar topado
+  const fondoGravado   = 0;
+
+  // Base gravable ISR = bruto + bono + vales gravados (fondo siempre exento)
+  const baseISR = bruto + bono + valesGravado;
+  const isrMensual = calcularISR(baseISR);
+
+  // IMSS (cuota obrera mensual)
+  const imssTotal = (bruto * IMSS_CUOTA) + (bruto * IMSS_CESANTIA);
+
+  // Neto efectivo (depósito a cuenta) — SIN incluir vales
+  const netoEfectivo = bruto + bono - isrMensual - imssTotal - fondoRetencion;
+  // Ingreso real total = neto efectivo + vales (beneficio real pero no en cuenta)
+  const ingresoTotal = netoEfectivo + vales;
+
+  // Por frecuencia (sobre neto efectivo)
+  let netoPeriodo = netoEfectivo;
+  let labelPeriodo = 'Depósito mensual estimado';
+  if (frecuencia === 'quincenal') { netoPeriodo = netoEfectivo / 2; labelPeriodo = 'Depósito quincenal estimado'; }
+  if (frecuencia === 'semanal')   { netoPeriodo = netoEfectivo / 4.33; labelPeriodo = 'Depósito semanal estimado'; }
+
+  // Anual estimado sobre neto efectivo
+  const netoAnual = netoEfectivo * 12;
+
+  // Porcentajes para barra (base = bruto + bono)
+  const basePercepciones = bruto + bono;
+  const pNeto  = Math.min(100, (netoEfectivo / basePercepciones) * 100);
+  const pISR   = (isrMensual / basePercepciones) * 100;
+  const pIMSS  = (imssTotal / basePercepciones) * 100;
+  const pFondo = (fondoRetencion / basePercepciones) * 100;
+
+  document.getElementById('resultados').innerHTML = `
+    <div class="card animate-in">
+      <div class="card-title">
+        <div class="icon">💰</div>
+        Tu resumen de nómina
+      </div>
+
+      <!-- Hero neto efectivo -->
+      <div class="result-hero">
+        <div class="result-hero-label">${labelPeriodo}</div>
+        <div class="result-hero-amount">${fmt(netoPeriodo)}</div>
+        <div class="result-hero-sub">Sueldo bruto: ${fmt(bruto)}/mes · Solo efectivo a tu cuenta</div>
+      </div>
+
+      <!-- Grid secundario -->
+      <div class="result-grid">
+        <div class="result-item">
+          <div class="result-item-label">💳 Depósito mensual</div>
+          <div class="result-item-val">${fmt(netoEfectivo)}</div>
+        </div>
+        <div class="result-item">
+          <div class="result-item-label">ISR mensual</div>
+          <div class="result-item-val" style="color:var(--neg)">${fmt(isrMensual)}</div>
+        </div>
+        <div class="result-item">
+          <div class="result-item-label">IMSS + AFORE</div>
+          <div class="result-item-val" style="color:var(--accent2)">${fmt(imssTotal)}</div>
+        </div>
+        ${fondoRetencion > 0 ? `
+        <div class="result-item">
+          <div class="result-item-label">Fondo de ahorro</div>
+          <div class="result-item-val" style="color:#8e44ad">${fmt(fondoRetencion)}</div>
+        </div>` : `
+        <div class="result-item">
+          <div class="result-item-label">Base gravable</div>
+          <div class="result-item-val">${fmt(bruto + bono)}</div>
+        </div>`}
+      </div>
+
+      <!-- Barra visual -->
+      <div class="bar-wrap">
+        <div class="bar-label-row">
+          <span>Distribución de tu sueldo bruto</span>
+          <span>${Math.round(pNeto)}% depósito</span>
+        </div>
+        <div class="bar-track">
+          <div class="bar-seg bar-neto" style="width:${pNeto}%"></div>
+          <div class="bar-seg bar-isr"  style="width:${pISR}%"></div>
+          <div class="bar-seg bar-imss" style="width:${pIMSS}%"></div>
+          <div class="bar-seg bar-fa"   style="width:${pFondo}%"></div>
+        </div>
+        <div class="bar-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div>Depósito</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#e74c3c"></div>ISR</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#e67e22"></div>IMSS</div>
+          ${fondoRetencion > 0 ? `<div class="legend-item"><div class="legend-dot" style="background:#8e44ad"></div>Fondo ahorro</div>` : ''}
+        </div>
+      </div>
+
+      <!-- Desglose -->
+      <p class="breakdown-title">Desglose detallado</p>
+
+      <div class="breakdown-row">
+        <span class="breakdown-name"><span class="dot dot-pos"></span>Sueldo bruto</span>
+        <span class="breakdown-amount amount-pos">${fmt(bruto)}</span>
+      </div>
+      ${bono > 0 ? `
+      <div class="breakdown-row">
+        <span class="breakdown-name"><span class="dot dot-pos"></span>Bono / Comisión</span>
+        <span class="breakdown-amount amount-pos">${fmt(bono)}</span>
+      </div>` : ''}
+      <div class="breakdown-row">
+        <span class="breakdown-name"><span class="dot dot-neg"></span>ISR retenido</span>
+        <span class="breakdown-amount amount-neg">−${fmt(isrMensual)}</span>
+      </div>
+      <div class="breakdown-row">
+        <span class="breakdown-name"><span class="dot dot-neu"></span>Cuota IMSS + AFORE</span>
+        <span class="breakdown-amount amount-neu">−${fmt(imssTotal)}</span>
+      </div>
+      ${fondoRetencion > 0 ? `
+      <div class="breakdown-row">
+        <span class="breakdown-name"><span class="dot" style="background:#8e44ad"></span>Fondo de ahorro</span>
+        <span class="breakdown-amount" style="color:#8e44ad">−${fmt(fondoRetencion)}</span>
+      </div>` : ''}
+      <div class="breakdown-row" style="border-top:2px solid var(--border);margin-top:4px;padding-top:14px;">
+        <span class="breakdown-name" style="font-weight:600;color:var(--text)"><span class="dot dot-pos"></span><strong>💳 Depósito a tu cuenta</strong></span>
+        <span class="breakdown-amount amount-pos" style="font-size:16px">${fmt(netoEfectivo)}</span>
+      </div>
+      ${vales > 0 ? `
+      <div class="breakdown-row">
+        <span class="breakdown-name" style="color:var(--text-mid)"><span class="dot" style="background:#2980b9"></span>🛒 Vales de despensa</span>
+        <span class="breakdown-amount" style="color:#2980b9">${fmt(vales)}</span>
+      </div>
+      <div class="breakdown-row" style="background:var(--surface2);border-radius:8px;padding:10px 12px;margin-top:4px;border:none;">
+        <span class="breakdown-name" style="font-weight:600;color:var(--text)"><span class="dot dot-pos"></span><strong>📦 Ingreso real total</strong></span>
+        <span class="breakdown-amount amount-pos" style="font-size:15px">${fmt(ingresoTotal)}</span>
+      </div>` : ''}
+
+      <!-- Ingreso anual -->
+      <div class="anual-box" style="margin-top:18px">
+        <div class="anual-label">📅 Depósito anual estimado (12 meses)</div>
+        <div class="anual-val">${fmt(netoAnual)}</div>
+        <div class="anual-sub">Sin considerar aguinaldo ni PTU${vales > 0 ? ' · No incluye vales' : ''}</div>
+      </div>
+
+      ${fondoRetencion > 0 ? `
+      <div style="margin-top:14px;background:var(--accent-lt);border:1px solid rgba(26,122,74,0.15);border-radius:10px;padding:12px 14px;font-size:12px;color:var(--text-mid);line-height:1.6;">
+        💡 <strong>Fondo de ahorro:</strong> Tu empresa retiene ${fmt(fondoRetencion)}/mes y aporta la misma cantidad. Al final del año recuperas <strong>${fmt(fondoRetencion * 24)}</strong> (tu aportación + la de tu empresa).${fondoCalc > fondoTopeUMA ? ` Monto topado al límite de exención: ${fmt(fondoTopeUMA)}/mes (1.3 × UMA mensual).` : ''}
+      </div>` : ''}
+    </div>
+  `;
+}
+</script>
+</body>
+</html>
