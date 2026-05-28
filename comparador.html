@@ -96,8 +96,9 @@
     <div class="field"><label>Seguro de vida — valor mensual</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="a_segvida" placeholder="0" min="0" oninput="comparar()" /></div></div>
     <div class="field"><label>Vales de restaurante (mes)</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="a_vales_rest" placeholder="0" min="0" oninput="comparar()" /></div></div>
     <div class="field"><label>Otros beneficios (mes) <span class="tooltip" data-tip="Gimnasio, transporte, celular, etc.">ejemplos</span></label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="a_otros" placeholder="0" min="0" oninput="comparar()" /></div></div>
-    <p class="section-label">🚗 Costos del trabajo</p>
-    <div class="field"><label>Transporte / gasolina (mes)</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="a_transporte" placeholder="0" min="0" oninput="comparar()" /></div></div>
+    <p class="section-label">🚗 Costos por trabajar ahí</p>
+    <div class="field"><label>Costos mensuales estimados <span class="tooltip" data-tip="Todo lo que gastas extra por este trabajo: transporte, gasolina, estacionamiento, comida, uniforme, celular propio, etc. Reduce tu ingreso real.">¿Qué incluir?</span></label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="a_transporte" placeholder="0" min="0" oninput="comparar()" /></div></div>
+    <p style="font-size:11px;color:var(--text-muted);margin-top:-8px;margin-bottom:14px;line-height:1.6;">Ejemplos: transporte · gasolina · estacionamiento · comida · uniforme · celular personal</p>
   </div>
 
   <!-- EMPRESA B -->
@@ -119,8 +120,9 @@
     <div class="field"><label>Seguro de vida — valor mensual</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="b_segvida" placeholder="0" min="0" oninput="comparar()" /></div></div>
     <div class="field"><label>Vales de restaurante (mes)</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="b_vales_rest" placeholder="0" min="0" oninput="comparar()" /></div></div>
     <div class="field"><label>Otros beneficios (mes)</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="b_otros" placeholder="0" min="0" oninput="comparar()" /></div></div>
-    <p class="section-label">🚗 Costos del trabajo</p>
-    <div class="field"><label>Transporte / gasolina (mes)</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="b_transporte" placeholder="0" min="0" oninput="comparar()" /></div></div>
+    <p class="section-label">🚗 Costos por trabajar ahí</p>
+    <div class="field"><label>Costos mensuales estimados <span class="tooltip" data-tip="Todo lo que gastas extra por este trabajo: transporte, gasolina, estacionamiento, comida, uniforme, celular propio, etc. Reduce tu ingreso real.">¿Qué incluir?</span></label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="b_transporte" placeholder="0" min="0" oninput="comparar()" /></div></div>
+    <p style="font-size:11px;color:var(--text-muted);margin-top:-8px;margin-bottom:14px;line-height:1.6;">Ejemplos: transporte · gasolina · estacionamiento · comida · uniforme · celular personal</p>
   </div>
 </div>
 
@@ -183,12 +185,19 @@ function calcPaquete(p){
   const costosAnuales=transporte*12;
   const netoEfectivoAnual=netoMensual*12,valesAnual=vales*12;
   const totalAnual=netoEfectivoAnual+valesAnual+aguinaldoNeto+primaNeta+bonoAnualNeto+ptuNeto+fondoAnual+beneficiosAnuales-costosAnuales;
-  return{bruto,netoMensual,isrMensual,imssTotal,fondoRetencion,netoEfectivoAnual,valesAnual,aguinaldoNeto,primaNeta,bonoAnualNeto,ptuNeto,fondoAnual,beneficiosAnuales,costosAnuales,totalAnual};
+
+  // Compensación bruta anual
+  const brutaAnual = (bruto*12) + (bonoMensual*12) + aguinaldoBruto + primaBruta + bonoAnual + ptu;
+  // Compensación neta anual (sin beneficios en especie ni costos — solo flujo de efectivo neto)
+  const netaAnual = netoEfectivoAnual + valesAnual + aguinaldoNeto + primaNeta + bonoAnualNeto + ptuNeto + fondoAnual;
+
+  return{bruto,netoMensual,isrMensual,imssTotal,fondoRetencion,netoEfectivoAnual,valesAnual,aguinaldoNeto,primaNeta,bonoAnualNeto,ptuNeto,fondoAnual,beneficiosAnuales,costosAnuales,totalAnual,brutaAnual,netaAnual};
 }
-function row(label,va,vb,isNeg=false){
+function row(label,va,vb,isNeg=false,nota=''){
   if(va===0&&vb===0)return'';
   const tie=va===vb,aWins=isNeg?va<=vb:va>=vb;
-  return`<tr><td>${label}</td><td class="${tie?'':(aWins?'win':'lose')}">${fmt(va)}</td><td class="${tie?'':(!aWins?'win':'lose')}">${fmt(vb)}</td></tr>`;
+  const notaHtml=nota?`<br><span style="font-size:10px;color:var(--text-muted);font-weight:400">${nota}</span>`:'';
+  return`<tr><td>${label}${notaHtml}</td><td class="${tie?'':(aWins?'win':'lose')}">${fmt(va)}</td><td class="${tie?'':(!aWins?'win':'lose')}">${fmt(vb)}</td></tr>`;
 }
 function comparar(){
   const aB=v('a_bruto'),bB=v('b_bruto');
@@ -208,10 +217,10 @@ function comparar(){
       <table class="comp-table">
         <thead><tr><th>Concepto</th><th>Empresa A</th><th>Empresa B</th></tr></thead>
         <tbody>
-          ${row('Sueldo bruto mensual',a.bruto,b.bruto)}
-          ${row('Neto mensual (depósito)',a.netoMensual,b.netoMensual)}
-          ${row('ISR mensual',a.isrMensual,b.isrMensual,true)}
-          ${row('IMSS + AFORE mensual',a.imssTotal,b.imssTotal,true)}
+          ${row('Sueldo bruto mensual',a.bruto,b.bruto,false,'Solo informativo — base antes de impuestos')}
+          ${row('Neto mensual (depósito)',a.netoMensual,b.netoMensual,false,'Lo que llega a tu cuenta cada mes')}
+          ${row('ISR mensual',a.isrMensual,b.isrMensual,true,'Solo informativo — ya descontado del neto')}
+          ${row('IMSS + AFORE mensual',a.imssTotal,b.imssTotal,true,'Solo informativo — ya descontado del neto')}
           <tr class="section-row"><td colspan="3">Pagos anuales</td></tr>
           ${row('Neto efectivo anual (12 meses)',a.netoEfectivoAnual,b.netoEfectivoAnual)}
           ${row('Vales de despensa anuales',a.valesAnual,b.valesAnual)}
@@ -222,11 +231,20 @@ function comparar(){
           ${row('Fondo de ahorro (retención + matching)',a.fondoAnual,b.fondoAnual)}
           <tr class="section-row"><td colspan="3">Beneficios y costos</td></tr>
           ${row('Beneficios en especie anuales',a.beneficiosAnuales,b.beneficiosAnuales)}
-          ${row('Costos del trabajo anuales',a.costosAnuales,b.costosAnuales,true)}
+          ${row('Costos por trabajar ahí (anuales)',a.costosAnuales,b.costosAnuales,true)}
         </tbody>
-        <tfoot><tr class="total"><td>💰 Paquete total anual</td><td class="${ganador==='A'?'win':'lose'}">${fmt(a.totalAnual)}</td><td class="${ganador==='B'?'win':'lose'}">${fmt(b.totalAnual)}</td></tr></tfoot>
+        <tfoot>
+          <tr class="total"><td>📊 Compensación bruta anual<br><span style="font-size:10px;font-weight:400;color:var(--text-muted)">Antes de impuestos y deducciones</span></td><td class="${a.brutaAnual>=b.brutaAnual?'win':'lose'}">${fmt(a.brutaAnual)}</td><td class="${b.brutaAnual>=a.brutaAnual?'win':'lose'}">${fmt(b.brutaAnual)}</td></tr>
+          <tr class="total" style="background:var(--accent-lt)"><td>💰 Compensación neta anual<br><span style="font-size:10px;font-weight:400;color:var(--text-muted)">Efectivo real después de impuestos</span></td><td class="${a.netaAnual>=b.netaAnual?'win':'lose'}">${fmt(a.netaAnual)}</td><td class="${b.netaAnual>=a.netaAnual?'win':'lose'}">${fmt(b.netaAnual)}</td></tr>
+          <tr class="total" style="background:#e8f0fe"><td>🏆 Paquete total anual<br><span style="font-size:10px;font-weight:400;color:var(--text-muted)">Neto + beneficios en especie − costos</span></td><td class="${ganador==='A'?'win':'lose'}">${fmt(a.totalAnual)}</td><td class="${ganador==='B'?'win':'lose'}">${fmt(b.totalAnual)}</td></tr>
+        </tfoot>
       </table>
       <div class="info-box">ℹ️ El paquete total incluye: neto efectivo + vales + aguinaldo + prima vacacional + bono anual + PTU + fondo de ahorro (tu aportación + matching empresa) + beneficios en especie − costos del trabajo.</div>
+      <div style="margin-top:10px;background:var(--surface2);border-radius:10px;padding:12px 14px;font-size:12px;color:var(--text-muted);line-height:1.8;">
+        <strong style="color:var(--text-mid)">Cómo leer los colores:</strong><br>
+        🟢 <strong style="color:var(--accent)">Verde</strong> — valor más favorable en ese concepto (mayor ingreso o menor costo)<br>
+        ⚫ <strong style="color:var(--text-muted)">Gris</strong> — valor menos favorable en ese concepto
+      </div>
     </div>`;
 }
 </script>
