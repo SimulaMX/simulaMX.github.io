@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Comparador de Ofertas de Trabajo México 2026 | SimulaMX</title>
+  <meta name="description" content="Compara dos ofertas de trabajo y descubre cuál te conviene más. Incluye sueldo neto, aguinaldo, PTU, prima vacacional, SGMM y fondo de ahorro. Gratis." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root{--bg:#f5f7f2;--surface:#ffffff;--surface2:#eef2e8;--border:#d6dece;--accent:#1a7a4a;--accent-lt:#e8f5ee;--accent2:#d4870a;--accent2-lt:#fff8e8;--neg:#c0392b;--text:#1a2217;--text-mid:#4a5e45;--text-muted:#8a9e84;--shadow:0 2px 16px rgba(26,74,26,0.08);--radius:16px;}
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;padding-bottom:60px;}
+    nav{background:var(--surface);border-bottom:1px solid var(--border);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+    .logo{font-family:'Fraunces',serif;font-size:22px;font-weight:900;color:var(--accent);letter-spacing:-0.5px;text-decoration:none;}
+    .logo span{color:var(--text-muted);font-weight:400;font-size:13px;margin-left:6px;font-family:'DM Sans',sans-serif;}
+    .nav-back{font-size:13px;color:var(--text-mid);text-decoration:none;display:flex;align-items:center;gap:6px;font-weight:500;}
+    .nav-back:hover{color:var(--accent);}
+    .hero{text-align:center;padding:40px 24px 32px;max-width:680px;margin:0 auto;}
+    .hero-eyebrow{display:inline-block;font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--accent);background:var(--accent-lt);border:1px solid rgba(26,122,74,0.2);padding:5px 14px;border-radius:100px;margin-bottom:16px;}
+    h1{font-family:'Fraunces',serif;font-size:clamp(26px,5vw,40px);font-weight:900;line-height:1.1;color:var(--text);margin-bottom:12px;letter-spacing:-1px;}
+    h1 em{font-style:normal;color:var(--accent);}
+    .hero-sub{font-size:14px;color:var(--text-mid);font-weight:300;line-height:1.6;max-width:420px;margin:0 auto;}
+    .comp-grid{max-width:1100px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;}
+    @media(max-width:780px){.comp-grid{grid-template-columns:1fr;}}
+    .comp-result-wrap{max-width:1100px;margin:20px auto 0;padding:0 20px;}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);}
+    .card-title{font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--text);margin-bottom:22px;display:flex;align-items:center;gap:8px;}
+    .card-title .icon{width:28px;height:28px;background:var(--accent-lt);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;}
+    .card-title.empresa-b .icon{background:var(--accent2-lt);}
+    .field{margin-bottom:14px;}
+    .field label{display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:500;color:var(--text-mid);margin-bottom:6px;}
+    .field label .tooltip{font-size:11px;font-weight:400;color:var(--text-muted);background:var(--surface2);border-radius:100px;padding:2px 8px;cursor:help;position:relative;}
+    .field label .tooltip:hover::after{content:attr(data-tip);position:absolute;right:0;top:120%;background:var(--text);color:#fff;font-size:11px;padding:8px 12px;border-radius:8px;width:220px;z-index:99;line-height:1.5;font-weight:400;}
+    .input-wrap{display:flex;align-items:center;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;overflow:hidden;transition:border-color 0.2s;}
+    .input-wrap:focus-within{border-color:var(--accent);}
+    .input-prefix{padding:0 12px;font-size:14px;font-weight:500;color:var(--text-muted);background:var(--surface2);border-right:1px solid var(--border);height:44px;display:flex;align-items:center;}
+    .input-suffix{padding:0 12px;font-size:14px;font-weight:500;color:var(--text-muted);background:var(--surface2);border-left:1px solid var(--border);height:44px;display:flex;align-items:center;}
+    .input-wrap input[type="number"]{flex:1;border:none;outline:none;background:transparent;padding:0 14px;height:44px;font-size:15px;font-weight:500;color:var(--text);font-family:'DM Sans',sans-serif;-moz-appearance:textfield;}
+    .input-wrap input[type="number"]::-webkit-outer-spin-button,.input-wrap input[type="number"]::-webkit-inner-spin-button{-webkit-appearance:none;}
+    .select-wrap{background:var(--bg);border:1.5px solid var(--border);border-radius:10px;overflow:hidden;}
+    .select-wrap select{width:100%;border:none;outline:none;background:transparent;padding:0 14px;height:44px;font-size:14px;font-weight:500;color:var(--text);font-family:'DM Sans',sans-serif;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a9e84' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;}
+    .section-label{font-size:11px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:1.5px;margin:16px 0 10px;padding-top:16px;border-top:1px solid var(--surface2);}
+    .comp-winner{background:linear-gradient(135deg,var(--accent) 0%,#0f5a33 100%);border-radius:16px;padding:28px 32px;color:#fff;text-align:center;margin-bottom:20px;}
+    .comp-winner h2{font-family:'Fraunces',serif;font-size:26px;font-weight:900;margin-bottom:6px;}
+    .comp-winner p{font-size:14px;color:rgba(255,255,255,0.75);line-height:1.6;}
+    .comp-winner .diff{font-family:'Fraunces',serif;font-size:36px;font-weight:900;color:#fff;margin:12px 0 6px;}
+    .comp-table{width:100%;border-collapse:collapse;font-size:13px;}
+    .comp-table th{background:var(--surface2);padding:10px 14px;text-align:left;font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;}
+    .comp-table th:not(:first-child){text-align:right;}
+    .comp-table td{padding:11px 14px;border-bottom:1px solid var(--surface2);color:var(--text-mid);}
+    .comp-table td:not(:first-child){text-align:right;font-weight:500;font-family:'Fraunces',serif;font-size:14px;}
+    .comp-table tr.total td{font-weight:700;color:var(--text);background:var(--accent-lt);font-size:15px;border-top:2px solid var(--border);}
+    .comp-table td.win{color:var(--accent);}
+    .comp-table td.lose{color:var(--text-muted);}
+    .comp-table .section-row td{font-size:11px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:1px;background:var(--surface2);}
+    .empty{text-align:center;padding:40px 20px;color:var(--text-muted);}
+    .empty-icon{font-size:36px;margin-bottom:12px;opacity:0.4;}
+    .empty p{font-size:13px;line-height:1.6;}
+    .info-box{background:var(--accent-lt);border:1px solid rgba(26,122,74,0.15);border-radius:10px;padding:12px 14px;font-size:12px;color:var(--text-mid);line-height:1.6;margin-top:16px;}
+    .disclaimer{max-width:1100px;margin:28px auto 0;padding:0 20px;font-size:11px;color:var(--text-muted);text-align:center;line-height:1.6;}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+    .animate-in{animation:fadeUp 0.35s ease both;}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">SimulaMX <span>Beta</span></a>
+  <a href="index.html" class="nav-back">← Todos los simuladores</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">Compara · Decide · 2026</div>
+  <h1>¿Cuál oferta te<br><em>conviene más</em>?</h1>
+  <p class="hero-sub">Ingresa ambas ofertas y descubre cuál te deja más dinero real al año.</p>
+</div>
+
+<div class="comp-grid">
+  <!-- EMPRESA A -->
+  <div class="card">
+    <div class="card-title"><div class="icon">🅰️</div>Empresa A</div>
+    <p class="section-label" style="border-top:none;margin-top:0">💰 Compensación</p>
+    <div class="field"><label>Sueldo bruto mensual</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="a_bruto" placeholder="30,000" min="0" oninput="comparar()" /></div></div>
+    <div class="field"><label>Bono mensual / Comisión</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="a_bono_mensual" placeholder="0" min="0" oninput="comparar()" /></div></div>
+    <div class="field"><label>Bono anual <span class="tooltip" data-tip="Monto bruto del bono de desempeño anual.">¿Qué es?</span></label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="a_bono_anual" placeholder="0" min="0" oninput="comparar()" /></div></div>
+    <p class="section-label">🎁 Prestaciones</p>
+    <div class="field"><label>Vales de despensa (mes)</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="a_vales" placeholder="0" min="0" oninput="comparar()" /></div></div>
+    <div class="field"><label>Fondo de ahorro</label><div class="select-wrap"><select id="a_fondo_pct" onchange="comparar()"><option value="0">Sin fondo</option><option value="0.04">4%</option><option value="0.05">5%</option><option value="0.08">8%</option><option value="0.10">10%</option><option value="0.13">13%</option></select></div></div>
+    <div class="field"><label>Aguinaldo <span class="tooltip" data-tip="Mínimo legal: 15 días.">días</span></label><div class="input-wrap"><input type="number" id="a_aguinaldo" placeholder="15" min="15" oninput="comparar()" /><span class="input-suffix">días</span></div></div>
+    <div class="field"><label>Prima vacacional</label><div class="input-wrap"><input type="number" id="a_prima" placeholder="25" min="25" oninput="comparar()" /><span class="input-suffix">%</span></div></div>
+    <div class="field"><label>Días de vacaciones (año 1)</label><div class="input-wrap"><input type="number" id="a_vacaciones" placeholder="12" min="12" oninput="comparar()" /><span class="input-suffix">días</span></div></div>
+    <div class="field"><label>PTU estimada (anual)</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="a_ptu" placeholder="0" min="0" oninput="comparar()" /></div></div>
+    <p class="section-label">🛡️ Beneficios en especie</p>
+    <div class="field"><label>SGMM — valor mensual <span class="tooltip" data-tip="Prima anual de tu seguro médico ÷ 12.">¿Qué es?</span></label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="a_sgmm" placeholder="0" min="0" oninput="comparar()" /></div></div>
+    <div class="field"><label>Seguro de vida — valor mensual</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="a_segvida" placeholder="0" min="0" oninput="comparar()" /></div></div>
+    <div class="field"><label>Vales de restaurante (mes)</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="a_vales_rest" placeholder="0" min="0" oninput="comparar()" /></div></div>
+    <div class="field"><label>Otros beneficios (mes) <span class="tooltip" data-tip="Gimnasio, transporte, celular, etc.">ejemplos</span></label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="a_otros" placeholder="0" min="0" oninput="comparar()" /></div></div>
+    <p class="section-label">🚗 Costos del trabajo</p>
+    <div class="field"><label>Transporte / gasolina (mes)</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="a_transporte" placeholder="0" min="0" oninput="comparar()" /></div></div>
+  </div>
+
+  <!-- EMPRESA B -->
+  <div class="card">
+    <div class="card-title empresa-b"><div class="icon">🅱️</div>Empresa B</div>
+    <p class="section-label" style="border-top:none;margin-top:0">💰 Compensación</p>
+    <div class="field"><label>Sueldo bruto mensual</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="b_bruto" placeholder="28,000" min="0" oninput="comparar()" /></div></div>
+    <div class="field"><label>Bono mensual / Comisión</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="b_bono_mensual" placeholder="0" min="0" oninput="comparar()" /></div></div>
+    <div class="field"><label>Bono anual</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="b_bono_anual" placeholder="0" min="0" oninput="comparar()" /></div></div>
+    <p class="section-label">🎁 Prestaciones</p>
+    <div class="field"><label>Vales de despensa (mes)</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="b_vales" placeholder="0" min="0" oninput="comparar()" /></div></div>
+    <div class="field"><label>Fondo de ahorro</label><div class="select-wrap"><select id="b_fondo_pct" onchange="comparar()"><option value="0">Sin fondo</option><option value="0.04">4%</option><option value="0.05">5%</option><option value="0.08">8%</option><option value="0.10">10%</option><option value="0.13">13%</option></select></div></div>
+    <div class="field"><label>Aguinaldo</label><div class="input-wrap"><input type="number" id="b_aguinaldo" placeholder="15" min="15" oninput="comparar()" /><span class="input-suffix">días</span></div></div>
+    <div class="field"><label>Prima vacacional</label><div class="input-wrap"><input type="number" id="b_prima" placeholder="25" min="25" oninput="comparar()" /><span class="input-suffix">%</span></div></div>
+    <div class="field"><label>Días de vacaciones (año 1)</label><div class="input-wrap"><input type="number" id="b_vacaciones" placeholder="12" min="12" oninput="comparar()" /><span class="input-suffix">días</span></div></div>
+    <div class="field"><label>PTU estimada (anual)</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="b_ptu" placeholder="0" min="0" oninput="comparar()" /></div></div>
+    <p class="section-label">🛡️ Beneficios en especie</p>
+    <div class="field"><label>SGMM — valor mensual</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="b_sgmm" placeholder="0" min="0" oninput="comparar()" /></div></div>
+    <div class="field"><label>Seguro de vida — valor mensual</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="b_segvida" placeholder="0" min="0" oninput="comparar()" /></div></div>
+    <div class="field"><label>Vales de restaurante (mes)</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="b_vales_rest" placeholder="0" min="0" oninput="comparar()" /></div></div>
+    <div class="field"><label>Otros beneficios (mes)</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="b_otros" placeholder="0" min="0" oninput="comparar()" /></div></div>
+    <p class="section-label">🚗 Costos del trabajo</p>
+    <div class="field"><label>Transporte / gasolina (mes)</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="b_transporte" placeholder="0" min="0" oninput="comparar()" /></div></div>
+  </div>
+</div>
+
+<div class="comp-result-wrap">
+  <div id="comp-resultado">
+    <div class="card empty animate-in"><div class="empty-icon">⚖️</div><p>Ingresa el sueldo bruto de ambas empresas para ver la comparación.</p></div>
+  </div>
+</div>
+
+<p class="disclaimer">
+  Estimaciones orientativas. Tablas ISR 2026 (Anexo 8 RMF 2026, DOF 28-dic-2025), UMA 2026 ($117.31) y cuotas IMSS vigentes.<br>
+  No constituyen asesoría fiscal. Consulta a un contador certificado para situaciones específicas.
+</p>
+
+<script>
+const tablaISR=[
+  {limInf:0.01,limSup:844.59,cuotaFija:0.00,tasa:0.0192},
+  {limInf:844.60,limSup:7168.51,cuotaFija:16.22,tasa:0.0640},
+  {limInf:7168.52,limSup:12598.02,cuotaFija:420.95,tasa:0.1088},
+  {limInf:12598.03,limSup:14644.64,cuotaFija:1011.68,tasa:0.1600},
+  {limInf:14644.65,limSup:17533.64,cuotaFija:1339.14,tasa:0.1792},
+  {limInf:17533.65,limSup:35362.83,cuotaFija:1856.84,tasa:0.2136},
+  {limInf:35362.84,limSup:55736.68,cuotaFija:5665.16,tasa:0.2352},
+  {limInf:55736.69,limSup:106410.50,cuotaFija:10457.09,tasa:0.3000},
+  {limInf:106410.51,limSup:141880.66,cuotaFija:25659.23,tasa:0.3200},
+  {limInf:141880.67,limSup:425641.99,cuotaFija:36018.97,tasa:0.3400},
+  {limInf:425642.00,limSup:Infinity,cuotaFija:132573.79,tasa:0.3500},
+];
+const tablaSubsidio=[{limInf:0.01,limSup:9081.00,subsidio:406.83},{limInf:9081.01,limSup:Infinity,subsidio:0.00}];
+const IMSS_CUOTA=0.0165,IMSS_CESANTIA=0.0125,UMA_MENSUAL=117.31*30.4,SM_DIARIO=315.04;
+function calcularISR(base){if(base<=0)return 0;const n=tablaISR.find(r=>base>=r.limInf&&base<=r.limSup);if(!n)return 0;const isr=n.cuotaFija+(base-n.limInf)*n.tasa;const s=tablaSubsidio.find(r=>base>=r.limInf&&base<=r.limSup);return Math.max(0,isr-(s?s.subsidio:0));}
+function fmt(n){return'$'+(n||0).toLocaleString('es-MX',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function v(id){return parseFloat(document.getElementById(id).value)||0;}
+function calcPaquete(p){
+  const bruto=v(p+'bruto'),bonoMensual=v(p+'bono_mensual'),bonoAnual=v(p+'bono_anual');
+  const vales=v(p+'vales'),fondoPct=parseFloat(document.getElementById(p+'fondo_pct').value)||0;
+  const aguinaldo=v(p+'aguinaldo')||15,prima=(v(p+'prima')||25)/100,vacaciones=v(p+'vacaciones')||12;
+  const ptu=v(p+'ptu'),sgmm=v(p+'sgmm'),segvida=v(p+'segvida'),valesRest=v(p+'vales_rest'),otros=v(p+'otros'),transporte=v(p+'transporte');
+  const valesExencion=UMA_MENSUAL*0.40,valesGravado=Math.max(0,vales-valesExencion);
+  const baseISRMensual=bruto+bonoMensual+valesGravado,isrMensual=calcularISR(baseISRMensual);
+  const imssTotal=bruto*(IMSS_CUOTA+IMSS_CESANTIA);
+  const fondoTopeUMA=UMA_MENSUAL*1.3,fondoRetencion=Math.min(bruto*fondoPct,fondoTopeUMA);
+  const fondoAnual=fondoRetencion*24;
+  const netoMensual=bruto+bonoMensual-isrMensual-imssTotal-fondoRetencion;
+  const sdDiario=bruto/30;
+  const aguinaldoBruto=sdDiario*aguinaldo,aguinaldoExento=SM_DIARIO*30;
+  const aguinaldoGrav=Math.max(0,aguinaldoBruto-aguinaldoExento);
+  const isrAguinaldo=Math.max(0,calcularISR(bruto+aguinaldoGrav)-calcularISR(bruto));
+  const aguinaldoNeto=aguinaldoBruto-isrAguinaldo;
+  const primaBruta=(sdDiario*vacaciones)*prima,primaExenta=SM_DIARIO*15;
+  const primaGrav=Math.max(0,primaBruta-primaExenta);
+  const isrPrima=Math.max(0,calcularISR(bruto+primaGrav)-calcularISR(bruto));
+  const primaNeta=primaBruta-isrPrima;
+  const isrBonoAnual=Math.max(0,calcularISR(bruto+bonoAnual)-calcularISR(bruto));
+  const bonoAnualNeto=Math.max(0,bonoAnual-isrBonoAnual);
+  const ptuExento=SM_DIARIO*15,ptuGrav=Math.max(0,ptu-ptuExento);
+  const isrPtu=Math.max(0,calcularISR(bruto+ptuGrav)-calcularISR(bruto));
+  const ptuNeto=Math.max(0,ptu-isrPtu);
+  const beneficiosAnuales=(sgmm+segvida+valesRest+otros)*12;
+  const costosAnuales=transporte*12;
+  const netoEfectivoAnual=netoMensual*12,valesAnual=vales*12;
+  const totalAnual=netoEfectivoAnual+valesAnual+aguinaldoNeto+primaNeta+bonoAnualNeto+ptuNeto+fondoAnual+beneficiosAnuales-costosAnuales;
+  return{bruto,netoMensual,isrMensual,imssTotal,fondoRetencion,netoEfectivoAnual,valesAnual,aguinaldoNeto,primaNeta,bonoAnualNeto,ptuNeto,fondoAnual,beneficiosAnuales,costosAnuales,totalAnual};
+}
+function row(label,va,vb,isNeg=false){
+  if(va===0&&vb===0)return'';
+  const tie=va===vb,aWins=isNeg?va<=vb:va>=vb;
+  return`<tr><td>${label}</td><td class="${tie?'':(aWins?'win':'lose')}">${fmt(va)}</td><td class="${tie?'':(!aWins?'win':'lose')}">${fmt(vb)}</td></tr>`;
+}
+function comparar(){
+  const aB=v('a_bruto'),bB=v('b_bruto');
+  if(aB<=0||bB<=0){document.getElementById('comp-resultado').innerHTML=`<div class="card empty animate-in"><div class="empty-icon">⚖️</div><p>Ingresa el sueldo bruto de ambas empresas para ver la comparación.</p></div>`;return;}
+  const a=calcPaquete('a_'),b=calcPaquete('b_');
+  const ganador=a.totalAnual>=b.totalAnual?'A':'B';
+  const diff=Math.abs(a.totalAnual-b.totalAnual);
+  document.getElementById('comp-resultado').innerHTML=`
+    <div class="comp-winner animate-in">
+      <p style="font-size:12px;letter-spacing:2px;text-transform:uppercase;opacity:0.7;margin-bottom:4px">Mejor opción financiera</p>
+      <h2>Empresa ${ganador} gana 🏆</h2>
+      <div class="diff">${fmt(diff)}</div>
+      <p>más al año en ingreso real total</p>
+    </div>
+    <div class="card animate-in">
+      <div class="card-title"><div class="icon">📊</div>Comparativa detallada anual</div>
+      <table class="comp-table">
+        <thead><tr><th>Concepto</th><th>Empresa A</th><th>Empresa B</th></tr></thead>
+        <tbody>
+          ${row('Sueldo bruto mensual',a.bruto,b.bruto)}
+          ${row('Neto mensual (depósito)',a.netoMensual,b.netoMensual)}
+          ${row('ISR mensual',a.isrMensual,b.isrMensual,true)}
+          ${row('IMSS + AFORE mensual',a.imssTotal,b.imssTotal,true)}
+          <tr class="section-row"><td colspan="3">Pagos anuales</td></tr>
+          ${row('Neto efectivo anual (12 meses)',a.netoEfectivoAnual,b.netoEfectivoAnual)}
+          ${row('Vales de despensa anuales',a.valesAnual,b.valesAnual)}
+          ${row('Aguinaldo neto',a.aguinaldoNeto,b.aguinaldoNeto)}
+          ${row('Prima vacacional neta',a.primaNeta,b.primaNeta)}
+          ${row('Bono anual neto',a.bonoAnualNeto,b.bonoAnualNeto)}
+          ${row('PTU neta',a.ptuNeto,b.ptuNeto)}
+          ${row('Fondo de ahorro (retención + matching)',a.fondoAnual,b.fondoAnual)}
+          <tr class="section-row"><td colspan="3">Beneficios y costos</td></tr>
+          ${row('Beneficios en especie anuales',a.beneficiosAnuales,b.beneficiosAnuales)}
+          ${row('Costos del trabajo anuales',a.costosAnuales,b.costosAnuales,true)}
+        </tbody>
+        <tfoot><tr class="total"><td>💰 Paquete total anual</td><td class="${ganador==='A'?'win':'lose'}">${fmt(a.totalAnual)}</td><td class="${ganador==='B'?'win':'lose'}">${fmt(b.totalAnual)}</td></tr></tfoot>
+      </table>
+      <div class="info-box">ℹ️ El paquete total incluye: neto efectivo + vales + aguinaldo + prima vacacional + bono anual + PTU + fondo de ahorro (tu aportación + matching empresa) + beneficios en especie − costos del trabajo.</div>
+    </div>`;
+}
+</script>
+</body>
+</html>
