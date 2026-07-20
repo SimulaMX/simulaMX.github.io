@@ -8,6 +8,62 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "¿Por qué me descuentan tanto ISR de mi sueldo?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "El ISR es progresivo: mientras más ganas, mayor es el porcentaje que pagas sobre el excedente. En México las tasas van del 1.92% al 35% según tu nivel de ingreso. Tu tasa efectiva (el promedio real que pagas) siempre es menor que tu tasa marginal (la del último tramo)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Qué es el IMSS y cuánto me descuentan?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "El IMSS retiene una cuota obrera de aproximadamente 2.9% de tu salario base de cotización, que cubre enfermedad, maternidad, cesantía y vejez. El 1.25% va a tu AFORE. El patrón aporta una cantidad mucho mayor que no aparece en tu recibo."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Los vales de despensa pagan impuestos?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Los vales están exentos de ISR hasta 7 veces la UMA diaria al mes (aproximadamente 821 pesos en 2026) y exentos de IMSS hasta el 40% de la UMA mensual (aproximadamente 1,426 pesos). El excedente sobre esos topes sí se grava."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Cómo funciona el fondo de ahorro?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Tu empresa retiene un porcentaje de tu sueldo (hasta 13%) y aporta la misma cantidad, así que al final del año recibes el doble. Está exento de ISR hasta 1.3 veces la UMA mensual (aproximadamente 4,635 pesos en 2026)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Cuál es la diferencia entre sueldo bruto y neto?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "El sueldo bruto es lo que dice tu contrato antes de descuentos. El sueldo neto es lo que llega a tu cuenta después de restar ISR, cuotas del IMSS y otras deducciones como el fondo de ahorro."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Un bono o comisión aumenta mi ISR?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sí. Los bonos y comisiones se suman a tu ingreso gravable del mes en que se pagan y se gravan a tu tasa marginal, que es la más alta de tu nivel de ingreso, por lo que pueden sentirse castigados fiscalmente."
+        }
+      }
+    ]
+  }
+  </script>
   <style>
     :root {
       --bg:#f5f7f2;--surface:#ffffff;--surface2:#eef2e8;--border:#d6dece;
@@ -89,8 +145,27 @@
     .empty p{font-size:13px;line-height:1.6;}
     .disclaimer{max-width:900px;margin:28px auto 0;padding:0 20px;font-size:11px;color:var(--text-muted);text-align:center;line-height:1.6;}
     .info-box{background:var(--accent-lt);border:1px solid rgba(26,122,74,0.15);border-radius:10px;padding:12px 14px;font-size:12px;color:var(--text-mid);line-height:1.6;margin-top:14px;}
+    .faq-section{max-width:760px;margin:48px auto 0;padding:0 20px;}
+    .faq-title{font-family:'Fraunces',serif;font-size:24px;font-weight:900;color:var(--text);margin-bottom:8px;text-align:center;letter-spacing:-0.5px;}
+    .faq-sub{font-size:14px;color:var(--text-muted);text-align:center;margin-bottom:28px;font-weight:300;}
+    .faq-item{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:10px;overflow:hidden;}
+    .faq-q{padding:18px 20px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+    .faq-q:hover{color:var(--accent);}
+    .faq-q .arrow{font-size:14px;color:var(--text-muted);transition:transform 0.2s;flex-shrink:0;}
+    .faq-item.open .faq-q .arrow{transform:rotate(180deg);}
+    .faq-a{max-height:0;overflow:hidden;transition:max-height 0.3s ease;}
+    .faq-item.open .faq-a{max-height:400px;}
+    .faq-a-inner{padding:0 20px 18px;font-size:14px;color:var(--text-mid);line-height:1.7;font-weight:300;}
     @keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
     .animate-in{animation:fadeUp 0.35s ease both;}
+    @media print{
+      nav,.hero,.card:first-child,.faq-section,.disclaimer,button{display:none !important;}
+      body{padding:0;background:#fff;}
+      .main{display:block;padding:0;}
+      #resultados .card{box-shadow:none;border:none;padding:0;}
+      .result-hero{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+      .bar-seg,.anual-box,.info-box{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    }
   </style>
 </head>
 <body>
@@ -149,6 +224,41 @@
   </div>
 </div>
 
+<section class="faq-section">
+  <h2 class="faq-title">Preguntas frecuentes</h2>
+  <p class="faq-sub">Todo lo que necesitas saber sobre tu sueldo neto en México</p>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">¿Por qué me descuentan tanto ISR de mi sueldo? <span class="arrow">▾</span></div>
+    <div class="faq-a"><div class="faq-a-inner">El ISR (Impuesto Sobre la Renta) es progresivo: mientras más ganas, mayor es el porcentaje que pagas sobre el excedente. En México las tasas van del 1.92% al 35% según tu nivel de ingreso. Es importante entender la diferencia entre tu tasa marginal (la del último tramo donde cae tu sueldo) y tu tasa efectiva (el promedio real que pagas sobre todo tu ingreso), que siempre es menor. Por eso un aumento de sueldo se grava a la tasa marginal, no a la efectiva.</div></div>
+  </div>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">¿Qué es el IMSS y cuánto me descuentan? <span class="arrow">▾</span></div>
+    <div class="faq-a"><div class="faq-a-inner">El IMSS (Instituto Mexicano del Seguro Social) retiene una cuota obrera que cubre enfermedad, maternidad, invalidez, cesantía y vejez. La cuota que se descuenta al trabajador es aproximadamente el 2.9% de tu salario base de cotización (1.65% de prestaciones más 1.25% de cesantía y vejez, que va a tu AFORE). El patrón aporta una cantidad mucho mayor que no ves en tu recibo.</div></div>
+  </div>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">¿Los vales de despensa pagan impuestos? <span class="arrow">▾</span></div>
+    <div class="faq-a"><div class="faq-a-inner">Los vales de despensa están exentos de ISR hasta 7 veces la UMA diaria al mes (aproximadamente $821 en 2026). Para efectos de IMSS, están exentos hasta el 40% de la UMA mensual (aproximadamente $1,426). Si tus vales superan estos topes, el excedente se grava. Por eso son una prestación fiscalmente eficiente dentro de esos límites: recibes más dinero sin que aumente proporcionalmente tu carga fiscal.</div></div>
+  </div>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">¿Cómo funciona el fondo de ahorro? <span class="arrow">▾</span></div>
+    <div class="faq-a"><div class="faq-a-inner">El fondo de ahorro es una prestación donde tu empresa retiene un porcentaje de tu sueldo (hasta 13%) y aporta la misma cantidad. Al final del año recibes el doble de lo que aportaste. Está exento de ISR hasta el límite de 1.3 veces la UMA mensual (aproximadamente $4,635 en 2026). Reduce tu depósito mensual, pero es una forma de ahorro forzado con rendimiento garantizado del 100% gracias a la aportación de la empresa.</div></div>
+  </div>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">¿Cuál es la diferencia entre sueldo bruto y neto? <span class="arrow">▾</span></div>
+    <div class="faq-a"><div class="faq-a-inner">El sueldo bruto es la cantidad que aparece en tu contrato antes de cualquier descuento. El sueldo neto es lo que realmente llega a tu cuenta bancaria después de restar ISR, cuotas del IMSS y otras deducciones como el fondo de ahorro. La diferencia entre ambos puede ser significativa, especialmente en salarios altos donde el ISR es mayor.</div></div>
+  </div>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">¿Un bono o comisión aumenta mi ISR? <span class="arrow">▾</span></div>
+    <div class="faq-a"><div class="faq-a-inner">Sí. Los bonos y comisiones se suman a tu ingreso gravable del mes en que se pagan, lo que puede empujarte a un tramo de ISR más alto temporalmente. Esto explica por qué a veces un bono se siente "castigado" fiscalmente: se grava a tu tasa marginal, que es la más alta de tu nivel de ingreso.</div></div>
+  </div>
+</section>
+
 <p class="disclaimer">
   Estimaciones orientativas. Tablas ISR 2026 (Anexo 8 RMF 2026, DOF 28-dic-2025), UMA 2026 ($117.31) y cuotas IMSS vigentes.<br>
   No constituyen asesoría fiscal. Consulta a un contador certificado para situaciones específicas.
@@ -169,7 +279,12 @@ const tablaISR=[
   {limInf:425642.00,limSup:Infinity,cuotaFija:132573.79,tasa:0.3500},
 ];
 const tablaSubsidio=[{limInf:0.01,limSup:9081.00,subsidio:406.83},{limInf:9081.01,limSup:Infinity,subsidio:0.00}];
-const IMSS_CUOTA=0.0165,IMSS_CESANTIA=0.0125,UMA_MENSUAL=117.31*30.4,SM_DIARIO=315.04;
+const IMSS_CUOTA=0.0165,IMSS_CESANTIA=0.0125,UMA_MENSUAL=117.31*30.4,UMA_DIARIA=117.31,SM_DIARIO=315.04;
+// Topes vales de despensa 2026
+// ISR: 7 × UMA diaria (Art. 93 fracc. XIV LISR) = $821.17/mes
+// IMSS: 40% × UMA mensual (Art. 27 fracc. IX LSS) = $1,426.49/mes
+const VALES_TOPE_ISR  = UMA_DIARIA * 7;          // $821.17
+const VALES_TOPE_IMSS = UMA_MENSUAL * 0.40;       // $1,426.49
 function calcularISR(base){if(base<=0)return 0;const n=tablaISR.find(r=>base>=r.limInf&&base<=r.limSup);if(!n)return 0;const isr=n.cuotaFija+(base-n.limInf)*n.tasa;const s=tablaSubsidio.find(r=>base>=r.limInf&&base<=r.limSup);return Math.max(0,isr-(s?s.subsidio:0));}
 function fmt(n){return'$'+(n||0).toLocaleString('es-MX',{minimumFractionDigits:2,maximumFractionDigits:2});}
 const toggled={vales:false,fondo:false,bono:false};
@@ -181,10 +296,13 @@ function calcular(){
   const vales=toggled.vales?(parseFloat(document.getElementById('vales').value)||0):0;
   const fondoPct=toggled.fondo?parseFloat(document.getElementById('fondo_pct').value):0;
   const bono=toggled.bono?(parseFloat(document.getElementById('bono').value)||0):0;
-  const valesExencion=UMA_MENSUAL*0.40,valesGravado=Math.max(0,vales-valesExencion);
+  // Vales: dos topes distintos para ISR y para IMSS
+  const valesGravadoISR  = Math.max(0, vales - VALES_TOPE_ISR);   // excedente de $821.17 → sube ISR
+  const valesGravadoIMSS = Math.max(0, vales - VALES_TOPE_IMSS);  // excedente de $1,426.49 → sube IMSS
   const fondoTopeUMA=UMA_MENSUAL*1.3,fondoCalc=bruto*fondoPct,fondoRetencion=Math.min(fondoCalc,fondoTopeUMA);
-  const baseISR=bruto+bono+valesGravado,isrMensual=calcularISR(baseISR);
-  const imssTotal=bruto*(IMSS_CUOTA+IMSS_CESANTIA);
+  const baseISR=bruto+bono+valesGravadoISR,isrMensual=calcularISR(baseISR);
+  const sbcVales=valesGravadoIMSS;
+  const imssTotal=(bruto+sbcVales)*(IMSS_CUOTA+IMSS_CESANTIA);
   const netoEfectivo=bruto+bono-isrMensual-imssTotal-fondoRetencion;
   const ingresoTotal=netoEfectivo+vales;
   let netoPeriodo=netoEfectivo,labelPeriodo='Depósito mensual estimado';
@@ -192,6 +310,22 @@ function calcular(){
   if(frecuencia==='semanal'){netoPeriodo=netoEfectivo/4.33;labelPeriodo='Depósito semanal estimado';}
   const netoAnual=netoEfectivo*12,base2=bruto+bono;
   const pNeto=Math.min(100,(netoEfectivo/base2)*100),pISR=(isrMensual/base2)*100,pIMSS=(imssTotal/base2)*100,pFondo=(fondoRetencion/base2)*100;
+
+  // ── INSIGHT PERSONALIZADO ──
+  const totalDeducciones = isrMensual + imssTotal;                 // sin fondo (el fondo es ahorro, no impuesto)
+  const pctDeducciones   = (totalDeducciones / base2) * 100;       // % que se va en impuestos
+  const tasaEfectivaISR  = (isrMensual / base2) * 100;             // tasa efectiva real de ISR
+  // Tasa marginal (el tramo en el que cae)
+  const tramoActual = tablaISR.find(r => base2 >= r.limInf && base2 <= r.limSup);
+  const tasaMarginal = tramoActual ? tramoActual.tasa * 100 : 0;
+  // Promedio de referencia por rango salarial (tasa efectiva ISR aproximada del mercado)
+  let promedioRef, nivelSalarial;
+  if (base2 < 15000)      { promedioRef = 6;  nivelSalarial = 'ingreso bajo'; }
+  else if (base2 < 30000) { promedioRef = 11; nivelSalarial = 'ingreso medio'; }
+  else if (base2 < 60000) { promedioRef = 16; nivelSalarial = 'ingreso medio-alto'; }
+  else                    { promedioRef = 22; nivelSalarial = 'ingreso alto'; }
+  const difPromedio = tasaEfectivaISR - promedioRef;
+
   document.getElementById('resultados').innerHTML=`
     <div class="card animate-in">
       <div class="card-title"><div class="icon">💰</div>Tu resumen de nómina</div>
@@ -220,8 +354,57 @@ function calcular(){
       <div class="breakdown-row" style="border-top:2px solid var(--border);margin-top:4px;padding-top:14px;"><span class="breakdown-name" style="font-weight:600;color:var(--text)"><span class="dot dot-pos"></span><strong>💳 Depósito a tu cuenta</strong></span><span class="breakdown-amount amount-pos" style="font-size:16px">${fmt(netoEfectivo)}</span></div>
       ${vales>0?`<div class="breakdown-row"><span class="breakdown-name" style="color:var(--text-mid)"><span class="dot" style="background:#2980b9"></span>🛒 Vales de despensa</span><span class="breakdown-amount" style="color:#2980b9">${fmt(vales)}</span></div><div class="breakdown-row" style="background:var(--surface2);border-radius:8px;padding:10px 12px;margin-top:4px;border:none;"><span class="breakdown-name" style="font-weight:600;color:var(--text)"><span class="dot dot-pos"></span><strong>📦 Ingreso real total</strong></span><span class="breakdown-amount amount-pos" style="font-size:15px">${fmt(ingresoTotal)}</span></div>`:''}
       <div class="anual-box" style="margin-top:18px"><div class="anual-label">📅 Depósito anual estimado (12 meses)</div><div class="anual-val">${fmt(netoAnual)}</div><div class="anual-sub">Sin considerar aguinaldo ni PTU${vales>0?' · No incluye vales':''}</div></div>
-      ${fondoRetencion>0?`<div class="info-box">💡 <strong>Fondo de ahorro:</strong> Tu empresa retiene ${fmt(fondoRetencion)}/mes y aporta la misma cantidad. Al final del año recuperas <strong>${fmt(fondoRetencion*24)}</strong>.${fondoCalc>fondoTopeUMA?` Monto topado al límite: ${fmt(fondoTopeUMA)}/mes (1.3 × UMA).`:''}</div>`:''}
+
+      <div style="margin-top:18px;border-top:1px solid var(--surface2);padding-top:20px;">
+        <p class="breakdown-title" style="margin-bottom:16px;">📈 Análisis de tu nómina</p>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px;">
+            <div style="font-size:11px;color:var(--text-muted);font-weight:500;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Impuestos + cuotas</div>
+            <div style="font-family:'Fraunces',serif;font-size:22px;font-weight:900;color:var(--neg);">${pctDeducciones.toFixed(1)}%</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">${fmt(totalDeducciones)}/mes</div>
+          </div>
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px;">
+            <div style="font-size:11px;color:var(--text-muted);font-weight:500;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Tasa efectiva ISR</div>
+            <div style="font-family:'Fraunces',serif;font-size:22px;font-weight:900;color:var(--accent2);">${tasaEfectivaISR.toFixed(1)}%</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">Marginal: ${tasaMarginal.toFixed(1)}%</div>
+          </div>
+        </div>
+
+        <div class="info-box" style="margin-top:0;">
+          💡 Con un sueldo de ${fmt(base2)}/mes estás en un nivel de <strong>${nivelSalarial}</strong>. Tu tasa efectiva de ISR es <strong>${tasaEfectivaISR.toFixed(1)}%</strong>, ${Math.abs(difPromedio) < 1.5 ? 'muy cercana al' : (difPromedio > 0 ? 'por encima del' : 'por debajo del')} promedio de referencia (~${promedioRef}%) para tu rango salarial. ${tasaMarginal > tasaEfectivaISR + 3 ? `Nota que tu tasa marginal (${tasaMarginal.toFixed(0)}%) es más alta: cada peso extra de aumento se grava a esa tasa, no al promedio.` : ''}
+        </div>
+      </div>
+      ${fondoRetencion>0?`<div class="info-box">💡 <strong>Fondo de ahorro:</strong> Tu empresa retiene ${fmt(fondoRetencion)}/mes y aporta la misma cantidad. Al final del año recuperas <strong>${fmt(fondoRetencion*24)}</strong>.${fondoCalc>fondoTopeUMA?` Monto topado al límite: ${fmt(fondoTopeUMA)}/mes (1.3 × UMA mensual).`:''}</div>`:''}
+      ${valesGravadoISR>0?`<div class="info-box" style="background:#fff8e8;border-color:rgba(212,135,10,0.25);color:#7a5200;">📋 <strong>Vales y ISR:</strong> Tus vales superan el tope exento de ISR (${fmt(VALES_TOPE_ISR)}/mes, equivalente a 7 × UMA diaria). El excedente de ${fmt(valesGravadoISR)} se sumó a tu base gravable, por eso tu ISR es mayor.</div>`:''}
+      ${valesGravadoIMSS>0?`<div class="info-box" style="background:#fff8e8;border-color:rgba(212,135,10,0.25);color:#7a5200;">📋 <strong>Vales e IMSS:</strong> Tus vales superan el tope exento de IMSS (${fmt(VALES_TOPE_IMSS)}/mes, equivalente a 40% × UMA mensual). El excedente de ${fmt(valesGravadoIMSS)} se integró a tu salario base de cotización, aumentando tu cuota IMSS.</div>`:''}
+
+      <div style="margin-top:20px;border-top:1px solid var(--surface2);padding-top:18px;">
+        <p style="font-size:12px;color:var(--text-muted);text-align:center;margin-bottom:12px;font-weight:500;">¿Te sirvió? Compártelo</p>
+        <div style="display:flex;gap:10px;">
+          <button onclick="compartirWhatsApp(${netoEfectivo.toFixed(2)},${bruto.toFixed(2)})" style="flex:1;background:#25D366;color:#fff;border:none;border-radius:10px;padding:12px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity 0.2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">💬 WhatsApp</button>
+          <button onclick="copiarResultado(${netoEfectivo.toFixed(2)},${bruto.toFixed(2)},${isrMensual.toFixed(2)},${imssTotal.toFixed(2)})" id="btn-copiar" style="flex:1;background:var(--surface2);color:var(--text-mid);border:1px solid var(--border);border-radius:10px;padding:12px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all 0.2s;">📋 Copiar</button>
+          <button onclick="window.print()" style="flex:1;background:var(--surface2);color:var(--text-mid);border:1px solid var(--border);border-radius:10px;padding:12px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all 0.2s;" onmouseover="this.style.background='var(--accent-lt)';this.style.color='var(--accent)'" onmouseout="this.style.background='var(--surface2)';this.style.color='var(--text-mid)'">📄 PDF</button>
+        </div>
+      </div>
     </div>`;
+}
+
+function compartirWhatsApp(neto, bruto) {
+  const texto = `💰 Calculé mi sueldo neto en SimulaMX:\n\nSueldo bruto: $${Number(bruto).toLocaleString('es-MX')}/mes\nNeto en mano: $${Number(neto).toLocaleString('es-MX')}/mes\n\nCalcula el tuyo gratis 👉 https://simulamx.github.io`;
+  window.open('https://wa.me/?text=' + encodeURIComponent(texto), '_blank');
+}
+
+function copiarResultado(neto, bruto, isr, imss) {
+  const texto = `💰 SimulaMX — Mi cálculo de nómina 2026\n\nSueldo bruto: $${Number(bruto).toLocaleString('es-MX')}/mes\nISR: $${Number(isr).toLocaleString('es-MX')}/mes\nIMSS + AFORE: $${Number(imss).toLocaleString('es-MX')}/mes\nNeto en mano: $${Number(neto).toLocaleString('es-MX')}/mes\n\nCalcula el tuyo gratis: https://simulamx.github.io`;
+  navigator.clipboard.writeText(texto).then(() => {
+    const btn = document.getElementById('btn-copiar');
+    const original = btn.innerHTML;
+    btn.innerHTML = '✅ Copiado';
+    btn.style.background = 'var(--accent-lt)';
+    btn.style.color = 'var(--accent)';
+    setTimeout(() => { btn.innerHTML = original; btn.style.background = 'var(--surface2)'; btn.style.color = 'var(--text-mid)'; }, 2000);
+  });
 }
 </script>
 </body>
