@@ -8,6 +8,54 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "¿Cómo saber cuál oferta de trabajo me conviene más?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No te fijes solo en el sueldo bruto. Una oferta con menor sueldo pero mejores prestaciones puede dejarte más dinero real al año. Compara el paquete total anual: neto en efectivo más prestaciones exentas y beneficios en especie, menos los costos de trabajar ahí como transporte o comida."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Por qué un sueldo más alto no siempre es mejor?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Porque el ISR es progresivo: mientras más ganas en efectivo, mayor es el porcentaje de impuesto. Las prestaciones exentas como vales o fondo de ahorro no pagan ISR dentro de sus topes, así que una empresa con más prestaciones y menos sueldo bruto puede darte más neto."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Qué prestaciones debo considerar al comparar ofertas?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Aguinaldo, prima vacacional, días de vacaciones, fondo de ahorro, vales de despensa, PTU y bonos. También los beneficios en especie como seguro de gastos médicos mayores, seguro de vida y vales de restaurante. Resta los costos de cada trabajo como transporte o comida."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Cómo le pongo valor a un seguro médico o de vida que me da la empresa?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Un buen punto de partida es cuánto pagarías por una póliza similar por tu cuenta. Como referencia 2026, un SGMM individual va de $1,300 al mes para jóvenes hasta $3,500 o más pasados los 40, y un seguro de vida ronda $300 a $800 al mes. Cuando la empresa lo ofrece como prestación colectiva, su valor real es algo menor que contratarlo tú solo, pero sigue siendo un beneficio que no pagarías de tu bolsillo."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Debo considerar el costo de transporte al comparar trabajos?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sí. Un trabajo que paga bien pero está lejos puede costarte más en transporte, gasolina y comida que uno más cercano con sueldo menor. Estos costos reducen tu ingreso real. El trabajo desde casa puede ahorrarte miles de pesos al año, equivalente a un aumento indirecto."
+        }
+      }
+    ]
+  }
+  </script>
   <style>
     :root{--bg:#f5f7f2;--surface:#ffffff;--surface2:#eef2e8;--border:#d6dece;--accent:#1a7a4a;--accent-lt:#e8f5ee;--accent2:#d4870a;--accent2-lt:#fff8e8;--neg:#c0392b;--text:#1a2217;--text-mid:#4a5e45;--text-muted:#8a9e84;--shadow:0 2px 16px rgba(26,74,26,0.08);--radius:16px;}
     *{margin:0;padding:0;box-sizing:border-box;}
@@ -59,9 +107,27 @@
     .empty-icon{font-size:36px;margin-bottom:12px;opacity:0.4;}
     .empty p{font-size:13px;line-height:1.6;}
     .info-box{background:var(--accent-lt);border:1px solid rgba(26,122,74,0.15);border-radius:10px;padding:12px 14px;font-size:12px;color:var(--text-mid);line-height:1.6;margin-top:16px;}
+    .faq-section{max-width:760px;margin:48px auto 0;padding:0 20px;}
+    .faq-title{font-family:'Fraunces',serif;font-size:24px;font-weight:900;color:var(--text);margin-bottom:8px;text-align:center;letter-spacing:-0.5px;}
+    .faq-sub{font-size:14px;color:var(--text-muted);text-align:center;margin-bottom:28px;font-weight:300;}
+    .faq-item{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:10px;overflow:hidden;}
+    .faq-q{padding:18px 20px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+    .faq-q:hover{color:var(--accent);}
+    .faq-q .arrow{font-size:14px;color:var(--text-muted);transition:transform 0.2s;flex-shrink:0;}
+    .faq-item.open .faq-q .arrow{transform:rotate(180deg);}
+    .faq-a{max-height:0;overflow:hidden;transition:max-height 0.3s ease;}
+    .faq-item.open .faq-a{max-height:500px;}
+    .faq-a-inner{padding:0 20px 18px;font-size:14px;color:var(--text-mid);line-height:1.7;font-weight:300;}
     .disclaimer{max-width:1100px;margin:28px auto 0;padding:0 20px;font-size:11px;color:var(--text-muted);text-align:center;line-height:1.6;}
     @keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
     .animate-in{animation:fadeUp 0.35s ease both;}
+    @media print{
+      nav,.hero,.comp-grid,.disclaimer,.faq-section,button{display:none !important;}
+      body{padding:0;background:#fff;}
+      .comp-result-wrap{padding:0;margin:0;max-width:100%;}
+      .card{box-shadow:none;border:none;}
+      *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+    }
   </style>
 </head>
 <body>
@@ -92,8 +158,13 @@
     <div class="field"><label>Días de vacaciones (año 1)</label><div class="input-wrap"><input type="number" id="a_vacaciones" placeholder="12" min="12" oninput="comparar()" /><span class="input-suffix">días</span></div></div>
     <div class="field"><label>PTU estimada (anual)</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="a_ptu" placeholder="0" min="0" oninput="comparar()" /></div></div>
     <p class="section-label">🛡️ Beneficios en especie</p>
-    <div class="field"><label>SGMM — valor mensual <span class="tooltip" data-tip="Prima anual de tu seguro médico ÷ 12.">¿Qué es?</span></label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="a_sgmm" placeholder="0" min="0" oninput="comparar()" /></div></div>
-    <div class="field"><label>Seguro de vida — valor mensual</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="a_segvida" placeholder="0" min="0" oninput="comparar()" /></div></div>
+    <div style="background:var(--accent-lt);border:1px solid rgba(26,122,74,0.15);border-radius:8px;padding:10px 12px;font-size:11px;color:var(--text-mid);margin-bottom:12px;line-height:1.6;">
+      💡 <strong>¿No sabes cuánto valen?</strong> Referencias de mercado 2026:<br>
+      • <strong>SGMM individual:</strong> 25-30 años ~$1,300/mes · 30-40 años ~$2,200/mes · +40 años ~$3,500/mes<br>
+      • <strong>Seguro de vida:</strong> típicamente ~$300 a $800/mes según suma asegurada
+    </div>
+    <div class="field"><label>SGMM — valor mensual <span class="tooltip" data-tip="Lo que pagarías por una póliza similar por tu cuenta, dividido entre 12. Ver referencias arriba.">¿Qué es?</span></label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="a_sgmm" placeholder="2,200" min="0" oninput="comparar()" /></div></div>
+    <div class="field"><label>Seguro de vida — valor mensual</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="a_segvida" placeholder="500" min="0" oninput="comparar()" /></div></div>
     <div class="field"><label>Vales de restaurante (mes)</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="a_vales_rest" placeholder="0" min="0" oninput="comparar()" /></div></div>
     <div class="field"><label>Otros beneficios (mes) <span class="tooltip" data-tip="Gimnasio, transporte, celular, etc.">ejemplos</span></label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="a_otros" placeholder="0" min="0" oninput="comparar()" /></div></div>
     <p class="section-label">🚗 Costos por trabajar ahí</p>
@@ -116,8 +187,13 @@
     <div class="field"><label>Días de vacaciones (año 1)</label><div class="input-wrap"><input type="number" id="b_vacaciones" placeholder="12" min="12" oninput="comparar()" /><span class="input-suffix">días</span></div></div>
     <div class="field"><label>PTU estimada (anual)</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="b_ptu" placeholder="0" min="0" oninput="comparar()" /></div></div>
     <p class="section-label">🛡️ Beneficios en especie</p>
-    <div class="field"><label>SGMM — valor mensual</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="b_sgmm" placeholder="0" min="0" oninput="comparar()" /></div></div>
-    <div class="field"><label>Seguro de vida — valor mensual</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="b_segvida" placeholder="0" min="0" oninput="comparar()" /></div></div>
+    <div style="background:var(--accent2-lt);border:1px solid rgba(212,135,10,0.15);border-radius:8px;padding:10px 12px;font-size:11px;color:var(--text-mid);margin-bottom:12px;line-height:1.6;">
+      💡 <strong>¿No sabes cuánto valen?</strong> Referencias de mercado 2026:<br>
+      • <strong>SGMM individual:</strong> 25-30 años ~$1,300/mes · 30-40 años ~$2,200/mes · +40 años ~$3,500/mes<br>
+      • <strong>Seguro de vida:</strong> típicamente ~$300 a $800/mes según suma asegurada
+    </div>
+    <div class="field"><label>SGMM — valor mensual</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="b_sgmm" placeholder="2,200" min="0" oninput="comparar()" /></div></div>
+    <div class="field"><label>Seguro de vida — valor mensual</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="b_segvida" placeholder="500" min="0" oninput="comparar()" /></div></div>
     <div class="field"><label>Vales de restaurante (mes)</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="b_vales_rest" placeholder="0" min="0" oninput="comparar()" /></div></div>
     <div class="field"><label>Otros beneficios (mes)</label><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="b_otros" placeholder="0" min="0" oninput="comparar()" /></div></div>
     <p class="section-label">🚗 Costos por trabajar ahí</p>
@@ -131,6 +207,36 @@
     <div class="card empty animate-in"><div class="empty-icon">⚖️</div><p>Ingresa el sueldo bruto de ambas empresas para ver la comparación.</p></div>
   </div>
 </div>
+
+<section class="faq-section">
+  <h2 class="faq-title">Preguntas frecuentes</h2>
+  <p class="faq-sub">Cómo comparar ofertas de trabajo en México</p>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">¿Cómo saber cuál oferta de trabajo me conviene más? <span class="arrow">▾</span></div>
+    <div class="faq-a"><div class="faq-a-inner">No te fijes solo en el sueldo bruto. Una oferta con menor sueldo pero mejores prestaciones (vales, fondo de ahorro, aguinaldo superior, seguro de gastos médicos) puede dejarte más dinero real al año. Lo correcto es comparar el paquete total anual: suma tu neto en efectivo, más todas las prestaciones exentas y beneficios en especie, y resta los costos de trabajar ahí como transporte o comida.</div></div>
+  </div>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">¿Por qué un sueldo más alto no siempre es mejor? <span class="arrow">▾</span></div>
+    <div class="faq-a"><div class="faq-a-inner">Porque el ISR es progresivo: mientras más ganas en efectivo, mayor es el porcentaje que pagas de impuesto. Las prestaciones exentas como vales de despensa o fondo de ahorro no pagan ISR (dentro de sus topes), así que una empresa que ofrece más prestaciones y menos sueldo bruto puede darte más dinero neto que otra con sueldo alto pero sin prestaciones.</div></div>
+  </div>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">¿Qué prestaciones debo considerar al comparar ofertas? <span class="arrow">▾</span></div>
+    <div class="faq-a"><div class="faq-a-inner">Las principales son: aguinaldo (mínimo legal 15 días, muchas empresas dan más), prima vacacional, días de vacaciones, fondo de ahorro, vales de despensa, PTU, y bonos. También cuentan los beneficios en especie con valor económico como seguro de gastos médicos mayores, seguro de vida y vales de restaurante. No olvides restar los costos que te genera cada trabajo como transporte, gasolina o comida.</div></div>
+  </div>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">¿Cómo le pongo valor a un seguro médico o de vida que me da la empresa? <span class="arrow">▾</span></div>
+    <div class="faq-a"><div class="faq-a-inner">Un buen punto de partida es cuánto pagarías por una póliza similar por tu cuenta. Como referencia 2026, un seguro de gastos médicos mayores individual va de unos $1,300 al mes para personas jóvenes hasta $3,500 o más pasados los 40 años, y un seguro de vida ronda entre $300 y $800 al mes. Ten en cuenta que cuando la empresa lo ofrece como prestación colectiva, su valor real es algo menor que contratarlo tú solo, porque las pólizas de grupo son más baratas. Aun así, es un beneficio que no pagarías de tu bolsillo, y por eso vale la pena incluirlo al comparar ofertas.</div></div>
+  </div>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">¿Debo considerar el costo de transporte al comparar trabajos? <span class="arrow">▾</span></div>
+    <div class="faq-a"><div class="faq-a-inner">Sí. Un trabajo que paga bien pero está lejos puede costarte más en transporte, gasolina, estacionamiento y comida que uno más cercano con sueldo ligeramente menor. Estos costos reducen tu ingreso real. Un empleo con opción de trabajo desde casa puede ahorrarte miles de pesos al año en estos gastos, lo que equivale a un aumento de sueldo indirecto.</div></div>
+  </div>
+</section>
 
 <p class="disclaimer">
   Estimaciones orientativas. Tablas ISR 2026 (Anexo 8 RMF 2026, DOF 28-dic-2025), UMA 2026 ($117.31) y cuotas IMSS vigentes.<br>
@@ -152,7 +258,9 @@ const tablaISR=[
   {limInf:425642.00,limSup:Infinity,cuotaFija:132573.79,tasa:0.3500},
 ];
 const tablaSubsidio=[{limInf:0.01,limSup:9081.00,subsidio:406.83},{limInf:9081.01,limSup:Infinity,subsidio:0.00}];
-const IMSS_CUOTA=0.0165,IMSS_CESANTIA=0.0125,UMA_MENSUAL=117.31*30.4,SM_DIARIO=315.04;
+const IMSS_CUOTA=0.0165,IMSS_CESANTIA=0.0125,UMA_MENSUAL=117.31*30.4,UMA_DIARIA=117.31,SM_DIARIO=315.04;
+const VALES_TOPE_ISR  = UMA_DIARIA * 7;       // $821.17/mes — Art. 93 fracc. XIV LISR
+const VALES_TOPE_IMSS = UMA_MENSUAL * 0.40;   // $1,426.49/mes — Art. 27 fracc. IX LSS
 function calcularISR(base){if(base<=0)return 0;const n=tablaISR.find(r=>base>=r.limInf&&base<=r.limSup);if(!n)return 0;const isr=n.cuotaFija+(base-n.limInf)*n.tasa;const s=tablaSubsidio.find(r=>base>=r.limInf&&base<=r.limSup);return Math.max(0,isr-(s?s.subsidio:0));}
 function fmt(n){return'$'+(n||0).toLocaleString('es-MX',{minimumFractionDigits:2,maximumFractionDigits:2});}
 function v(id){return parseFloat(document.getElementById(id).value)||0;}
@@ -161,9 +269,10 @@ function calcPaquete(p){
   const vales=v(p+'vales'),fondoPct=parseFloat(document.getElementById(p+'fondo_pct').value)||0;
   const aguinaldo=v(p+'aguinaldo')||15,prima=(v(p+'prima')||25)/100,vacaciones=v(p+'vacaciones')||12;
   const ptu=v(p+'ptu'),sgmm=v(p+'sgmm'),segvida=v(p+'segvida'),valesRest=v(p+'vales_rest'),otros=v(p+'otros'),transporte=v(p+'transporte');
-  const valesExencion=UMA_MENSUAL*0.40,valesGravado=Math.max(0,vales-valesExencion);
-  const baseISRMensual=bruto+bonoMensual+valesGravado,isrMensual=calcularISR(baseISRMensual);
-  const imssTotal=bruto*(IMSS_CUOTA+IMSS_CESANTIA);
+  const valesGravadoISR  = Math.max(0, vales - VALES_TOPE_ISR);
+  const valesGravadoIMSS = Math.max(0, vales - VALES_TOPE_IMSS);
+  const baseISRMensual=bruto+bonoMensual+valesGravadoISR,isrMensual=calcularISR(baseISRMensual);
+  const imssTotal=(bruto+valesGravadoIMSS)*(IMSS_CUOTA+IMSS_CESANTIA);
   const fondoTopeUMA=UMA_MENSUAL*1.3,fondoRetencion=Math.min(bruto*fondoPct,fondoTopeUMA);
   const fondoAnual=fondoRetencion*24;
   const netoMensual=bruto+bonoMensual-isrMensual-imssTotal-fondoRetencion;
@@ -181,7 +290,9 @@ function calcPaquete(p){
   const ptuExento=SM_DIARIO*15,ptuGrav=Math.max(0,ptu-ptuExento);
   const isrPtu=Math.max(0,calcularISR(bruto+ptuGrav)-calcularISR(bruto));
   const ptuNeto=Math.max(0,ptu-isrPtu);
-  const beneficiosAnuales=(sgmm+segvida+valesRest+otros)*12;
+  // SGMM y seguro de vida se valúan a valor colectivo (30% menos que individual, por ser prestación de empresa)
+  const factorColectivo = 0.70;
+  const beneficiosAnuales=((sgmm+segvida)*factorColectivo + valesRest + otros)*12;
   const costosAnuales=transporte*12;
   const netoEfectivoAnual=netoMensual*12,valesAnual=vales*12;
   const totalAnual=netoEfectivoAnual+valesAnual+aguinaldoNeto+primaNeta+bonoAnualNeto+ptuNeto+fondoAnual+beneficiosAnuales-costosAnuales;
@@ -205,6 +316,10 @@ function comparar(){
   const a=calcPaquete('a_'),b=calcPaquete('b_');
   const ganador=a.totalAnual>=b.totalAnual?'A':'B';
   const diff=Math.abs(a.totalAnual-b.totalAnual);
+
+  // Guardar para compartir y voz
+  window.compActual={a,b,ganador,diff};
+
   document.getElementById('comp-resultado').innerHTML=`
     <div class="comp-winner animate-in">
       <p style="font-size:12px;letter-spacing:2px;text-transform:uppercase;opacity:0.7;margin-bottom:4px">Mejor opción financiera</p>
@@ -245,7 +360,103 @@ function comparar(){
         🟢 <strong style="color:var(--accent)">Verde</strong> — valor más favorable en ese concepto (mayor ingreso o menor costo)<br>
         ⚫ <strong style="color:var(--text-muted)">Gris</strong> — valor menos favorable en ese concepto
       </div>
+
+      <div style="margin-top:20px;border-top:1px solid var(--surface2);padding-top:18px;">
+        <button onclick="escucharComparacion()" id="btn-escuchar" style="width:100%;background:linear-gradient(135deg,var(--accent) 0%,#0f5a33 100%);color:#fff;border:none;border-radius:10px;padding:14px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity 0.2s;margin-bottom:12px;" onmouseover="this.style.opacity='0.92'" onmouseout="this.style.opacity='1'">🔊 Escuchar análisis</button>
+        <p style="font-size:12px;color:var(--text-muted);text-align:center;margin-bottom:12px;font-weight:500;">Comparte o guarda esta comparación</p>
+        <div style="display:flex;gap:10px;">
+          <button onclick="compartirWhatsApp()" style="flex:1;background:#25D366;color:#fff;border:none;border-radius:10px;padding:12px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity 0.2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">💬 WhatsApp</button>
+          <button onclick="copiarComparacion()" id="btn-copiar" style="flex:1;background:var(--surface2);color:var(--text-mid);border:1px solid var(--border);border-radius:10px;padding:12px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all 0.2s;">📋 Copiar</button>
+          <button onclick="window.print()" style="flex:1;background:var(--surface2);color:var(--text-mid);border:1px solid var(--border);border-radius:10px;padding:12px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all 0.2s;" onmouseover="this.style.background='var(--accent-lt)';this.style.color='var(--accent)'" onmouseout="this.style.background='var(--surface2)';this.style.color='var(--text-mid)'">📄 PDF</button>
+        </div>
+      </div>
     </div>`;
+}
+
+function escucharComparacion() {
+  const c = window.compActual;
+  if (!c) return;
+  const btn = document.getElementById('btn-escuchar');
+  if (window.speechSynthesis.speaking) {
+    window.speechSynthesis.cancel();
+    btn.innerHTML = '🔊 Escuchar análisis';
+    return;
+  }
+  const pesos = n => Math.round(Number(n)).toLocaleString('es-MX') + ' pesos';
+  const g = c.ganador === 'A' ? c.a : c.b;
+  const p = c.ganador === 'A' ? c.b : c.a;
+
+  let texto = `Analicemos cuál oferta te conviene más. `;
+  texto += `Considerando todo el paquete de compensación, la Empresa ${c.ganador} es la mejor opción. `;
+  texto += `Te deja aproximadamente ${pesos(c.diff)} más al año en ingreso real total. `;
+
+  // Comparar sueldo bruto vs paquete
+  if (g.bruto < p.bruto) {
+    texto += `Lo interesante es que la Empresa ${c.ganador} gana aunque su sueldo bruto es menor. `;
+    texto += `Esto demuestra que un sueldo más alto no siempre significa más dinero en tu bolsillo: las prestaciones marcan la diferencia. `;
+  } else if (g.bruto > p.bruto) {
+    texto += `La Empresa ${c.ganador} tiene tanto el mejor sueldo como el mejor paquete total. `;
+  } else {
+    texto += `Ambas tienen el mismo sueldo bruto, así que la diferencia está completamente en las prestaciones. `;
+  }
+
+  // Diferencia mensual neta
+  const difNetoMensual = Math.abs(c.a.netoMensual - c.b.netoMensual);
+  if (difNetoMensual > 100) {
+    const mejorNeto = c.a.netoMensual > c.b.netoMensual ? 'A' : 'B';
+    texto += `En el día a día, la Empresa ${mejorNeto} te deposita ${pesos(difNetoMensual)} más cada mes. `;
+  }
+
+  texto += `Mi recomendación: revisa no solo el sueldo, sino el valor completo del paquete antes de decidir.`;
+
+  const u = new SpeechSynthesisUtterance(texto);
+  u.lang = 'es-MX'; u.rate = 1.0; u.pitch = 1.05;
+  const voces = window.speechSynthesis.getVoices();
+  const preferidas = ['Microsoft Dalia Online (Natural)','Microsoft Sabina Online (Natural)','Google español de Estados Unidos','Google español','Paulina','Mónica'];
+  let mejorVoz = null;
+  for (const nombre of preferidas) { mejorVoz = voces.find(vz => vz.name.includes(nombre)); if (mejorVoz) break; }
+  if (!mejorVoz) mejorVoz = voces.find(vz => vz.lang === 'es-MX') || voces.find(vz => vz.lang.startsWith('es'));
+  if (mejorVoz) u.voice = mejorVoz;
+  u.onstart = () => { btn.innerHTML = '⏸️ Detener'; };
+  u.onend = () => { btn.innerHTML = '🔊 Escuchar análisis'; };
+  u.onerror = () => { btn.innerHTML = '🔊 Escuchar análisis'; };
+  window.speechSynthesis.speak(u);
+}
+if ('speechSynthesis' in window) { window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices(); }
+
+function textoComparacion() {
+  const c = window.compActual;
+  const p = n => '$' + Number(n).toLocaleString('es-MX', {minimumFractionDigits:2, maximumFractionDigits:2});
+  let t = `⚖️ *SimulaMX — Comparación de ofertas 2026*\n\n`;
+  t += `🏆 *Gana la Empresa ${c.ganador}*\n`;
+  t += `Diferencia: ${p(c.diff)} más al año\n\n`;
+  t += `*Empresa A:*\n`;
+  t += `Sueldo bruto: ${p(c.a.bruto)}/mes\n`;
+  t += `Neto mensual: ${p(c.a.netoMensual)}\n`;
+  t += `Paquete total anual: ${p(c.a.totalAnual)}\n\n`;
+  t += `*Empresa B:*\n`;
+  t += `Sueldo bruto: ${p(c.b.bruto)}/mes\n`;
+  t += `Neto mensual: ${p(c.b.netoMensual)}\n`;
+  t += `Paquete total anual: ${p(c.b.totalAnual)}\n\n`;
+  t += `Compara tu oferta gratis 👉 https://simulamx.github.io/comparador.html`;
+  return t;
+}
+
+function compartirWhatsApp() {
+  if (!window.compActual) return;
+  window.open('https://wa.me/?text=' + encodeURIComponent(textoComparacion()), '_blank');
+}
+
+function copiarComparacion() {
+  if (!window.compActual) return;
+  navigator.clipboard.writeText(textoComparacion()).then(() => {
+    const btn = document.getElementById('btn-copiar');
+    const original = btn.innerHTML;
+    btn.innerHTML = '✅ Copiado';
+    btn.style.background = 'var(--accent-lt)';
+    btn.style.color = 'var(--accent)';
+    setTimeout(() => { btn.innerHTML = original; btn.style.background = 'var(--surface2)'; btn.style.color = 'var(--text-mid)'; }, 2000);
+  });
 }
 </script>
 </body>
